@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+html {
+  font-family: 'Tw Cen MT', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: rgb(37, 37, 37);
+  color: white;
+  overflow: hidden;
+  transition: background-image 1s;
+}
+#display {
+  display: grid;
+  grid-template-columns: minmax(225px, 15%) auto;
+  height: 100vh;
+}
+
+#bulletin {
+  position: relative;
+}
+
+#title {
+  font-family: 'Bebas Neue', 'Tw Cen MT', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 5px;
+  letter-spacing: 2px;
+}
+
+#notes-list {
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.6);
+  border: 1px solid black;
+}
+
+#notes-list > section {
+  height: 90vh;
+  overflow-y: auto;
+}
+
+#sample-sticky-note, #sample-sticky-note-tab {
+  display: none;
+}
+
+.sticky-note-tab {
+  position: relative;
+  border: 1px solid darkgray;
+  line-height: 1.1em;
+  margin: 1px;
+  margin-bottom: 5px;
+  padding: 2px;
+  background-color: rgba(0,0,0,0.45);
+  transition: border 0.3s, background-color 0.1s;
+}
+
+.sticky-note-tab:hover {
+  border: 1px solid white;
+  background-color: rgba(46, 46, 46, 0.45);
+}
+
+.sticky-note-tab .tab-title {
+  font-family: 'Tw Cen MT', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: white;
+}
+
+.note-priority, .date {
+  text-transform: uppercase;
+  margin-top: 2px;
+  font-size: 0.75em;
+  letter-spacing: 1px;
+}
+
+.note-priority {
+  font-weight: bolder;
+  height: 12px;
+}
+
+.sticky-note {
+  border: 1px solid black;
+  width: fit-content;
+  min-width: 200px;
+  max-width: 400px;
+  min-height: 160px;
+  max-height: 95vh;
+  height: 270px;
+  resize: both;
+  position:absolute;
+  overflow: hidden; 
+  display: grid;
+  grid-template-rows: fit-content(75px) auto /*1fr*/;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background: linear-gradient(hsl(315, 0%, 90%), hsl(0,100%, 75%));
+}
+
+.sticky-note-header {
+  background-color: rgba(255,255,255, 0.35);
+  user-select: none;
+  cursor: grab;
+  height: fit-content;
+}
+
+.sticky-note-header > .title-bar {
+  font-size: 1.3em;
+  margin-left: 5px;
+}
+
+.sticky-note-button {
+  display: inline-block;
+  font-size: 1em;
+  background-color: rgba(0,0,0,0);
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  border: none;
+  width: 11%;
+  height: 100%;
+}
+
+.sticky-note .sticky-note-header .title-edit{
+  background-color: rgba(0,0,0,0);
+  border: none;
+  width: 75%;
+  font-weight: bold;
+  font-size: inherit;
+  font-family: 'Tw Cen MT', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.toggle-menu-button {
+  float: right;
+}
+
+.toggle-menu-button > i {
+  /* transition: transform 0.3s; */
+}
+
+.menu-opened {
+  /* transform: scaleY(1); */
+  transform: rotate(-0.5turn);
+}
+
+.toolbar {
+  transition: max-height 0.3s ease-in !important;
+  max-height: 300px;
+}
+
+.slide-in-out {
+  max-height: 0 !important;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out !important;
+  /* Don't use display: none or else animations won't work. */
+}
+
+.hide-no-display{
+  display: none;
+}
+
+.close-sticky-note-button {
+  color: red;
+  float: right;
+}
+
+label[for="priorities"] {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: -0.5px;
+  color: black;
+  font-weight: bolder;
+}
+
+.priority-label {
+  /* appearance: none; */
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.85em;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+.color-picker {
+  display: flex;
+  flex-direction: row;
+}
+
+.color-picker .fa-caret-right {
+  margin: 0 5px 0 1px;
+  color: black;
+}
+
+.color-picker-toggle-button {
+  margin-top: 3px;
+  color: hsl(315, 100%, 80%);
+  font-size: 0.75em;
+  transition: color 0.3s;
+}
+.color-picker-toggle-button:hover {
+  color: hsl(315, 100%, 90%)
+}
+
+.color-picker-toggle-button:active {
+  color: hsl(315, 100%, 50%)
+
+}
+
+.hide {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.3s;
+}
+
+.color-picker-options {
+  /* border: 1px solid black; */
+  border-radius: 3px;
+  padding: 0 2px;
+  transition: width 0.3s, opacity 0.3s ease-in;
+  width: fit-content;
+  cursor: initial;
+
+}
+
+.color-picker-options > div {
+  background-color: red;
+  display: inline-block; 
+  width: 20px; 
+  height: 20px;
+  border-radius: 50%;
+  margin-top: 1px;
+  margin-right: 5px;
+  border: 1px solid silver;
+  transition: background-color 0.15s;
+}
+
+/* Use important for these two since they're button states overriding inline CSS */
+.color-picker-options > div:hover {
+  border :1px solid black;
+}
+
+.color-picker-options > div:active {
+  background-color:rgba(0,0,0, 0.35) !important;
+}
+
+.sticky-note-header .category-label {
+  margin: 5px 0 2px 0;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-style: italic;
+}
+
+.sticky-note .text-content {
+  border: none;
+  height: auto;
+  resize: none;
+  width: 95%;
+  overflow-y:auto;
+  font-family: 'Roboto', 'Trebuchet MS','Lucida Sans Unicode',
+      'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: rgba(0,0,0,0);
+  font-size: .95em;
+  font-weight: 400;
+  /* border: 1px solid red; */
+  margin: 5px;
+}
+
+#floating-controls {
+  position: absolute;
+  float: left;
+  top: 90%;
+  left: 2%;
+  z-index: 999;
+  bottom: 20px;
+  height: fit-content;
+}
+
+
+#floating-controls > button {
+  border-radius: 50%;
+  border: 2px solid hsl(140, 100%, 45%);
+  background-color: hsl(140, 100%, 75%);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+#add-sticky-button {
+  width: 5em;
+  height: 5em;
+}
+
+#change-bg-button {
+  width: 3em;
+  height: 3em;
+  margin-left: 1vw;
+  position: absolute;
+  top: 12px;
+}
+
+#floating-controls > button:hover{
+  background-color: hsl(140, 100%, 95%);
+}
+
+#floating-controls > button:active {
+  background-color: hsl(140, 100%, 25%);
+}
+
+#background-menu {
+  position: absolute;
+  bottom: 70px;
+  left: 64px;
+  border: 1px solid orange;
+  width: fit-content;
+  height: fit-content;
+  background-color: rgba(0,0,0, 0.35);
+}
+
+#background-menu:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 14px solid orange;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  top: 100%;
+  left: 28%;
+  background: none;
+}
+
+#background-selection{
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 2px;
+  overflow: auto;
+  max-height: 25vh;
+  margin: 3px auto;
+}
+
+#background-menu > h2 {
+  text-align: center;
+  border-bottom: 1px solid white;
+  margin: 0 3px;
+}
+
+#background-menu > #background-selection > button {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border: 1px solid red;
+  justify-self: center;
+}
+
+#save-message {
+  font-size: 0.85rem;
+  position: relative;
+  left: 35vw;
+  visibility: hidden;
+  bottom: 20px;
+}
+
+.unhide {
+  visibility: unset !important;
+}
+
+@media (max-height: 700px) {
+  #floating-controls {
+    top: 80%;
+  }
+}
+
+.reset-pos-button {
+  position: absolute;
+  bottom: 49%;
+  left: 77%;
+  width: 50px;
+  font-size: 0.75em;
+  background-color: rgba(0,0,0,0);
+  color: goldenrod;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+#notes-list {
+  position: relative;
+}
+
+#sort-options {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 10000;
+  border: 1px solid orange;
+}
+
+#sort-button {
+  background-color: black;
+  border: 1px solid white;
+  color: white;
+  margin-bottom: 5px;
+  margin-left: 1px;
+}
+
+#sort-button:hover {
+  background-color: slategrey;
+}
+
+#sort-options > button {
+  border: none;
+  background-color: rgba(0,0,0, 0.85);
+  color: white;
+  font-family: inherit;
+  padding: 10px 10px;
+  transition: background-color 0.3s;
+}
+
+#sort-options > button:hover {
+  background-color: rgba(104,104,104);
+}
